@@ -1,4 +1,3 @@
-//jshint esversion:6
 require('dotenv').config();
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -29,9 +28,7 @@ app.use(passport.session());
 
 mongoose.connect('mongodb://127.0.0.1:27017/mydb', {
   useNewUrlParser: true,
-  useUnifiedTopology: true, // This is still a valid option for topology.
- // useCreateIndex: true, // Replace this with the following:
- // createIndexes: true // Use the createIndexes option instead.
+  useUnifiedTopology: true, 
 })
   .then(() => {
     console.log('Connected to MongoDB');
@@ -136,20 +133,13 @@ app.get("/submit", function(req, res){
 });
 
 app.post("/submit", function(req, res) {
-  // Get the submitted secret from the request body
   const submittedSecret = req.body.secret;
 
-  // Log the user's ID to the console
-  //console.log(req.user.id);
-
-  // Find the user by ID
   User.findById(req.user.id, function(err, foundUser) {
     if (err) {
-      // Handle any errors that occur during the query
       console.log(err);
     } else {
       if (foundUser) {
-        // If a user is found, update their secret and save the user
         foundUser.secret = submittedSecret;
         foundUser.save(function() {
           res.redirect("/secrets");
@@ -203,11 +193,6 @@ app.post("/login", function(req, res){
   });
 
 });
-
-
-
-
-
 
 
 app.listen(3000, function() {
