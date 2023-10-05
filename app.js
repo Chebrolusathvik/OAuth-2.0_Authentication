@@ -37,7 +37,6 @@ mongoose.connect('mongodb://127.0.0.1:27017/mydb', {
     console.error('Error connecting to MongoDB:', error);
   });
 
-//mongoose.set("useCreateIndex", true);
 
 const userSchema = new mongoose.Schema ({
   email: String,
@@ -94,7 +93,6 @@ app.get("/auth/google",
 app.get("/auth/google/secrets",
   passport.authenticate('google', { failureRedirect: "/login" }),
   function(req, res) {
-    // Successful authentication, redirect to secrets.
     res.redirect("/secrets");
   });
 
